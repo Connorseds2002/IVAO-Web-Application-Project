@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { addBookingModule } from './ATC Bookings/AtcBookings.module';
+import DataBaseConnection from './DataBase Connection';
 
 @Module({
   imports: [addBookingModule, TypeOrmModule.forRoot({
@@ -12,7 +13,7 @@ import { addBookingModule } from './ATC Bookings/AtcBookings.module';
     username: 'admin',
     password: 'admin123',
     database: 'bookings',
-    entities: [],
+    entities: [DataBaseConnection],
     synchronize: true,
   })],
   controllers: [AppController],
