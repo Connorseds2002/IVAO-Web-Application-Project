@@ -1,6 +1,6 @@
-import { DataBaseConnection } from "./DataBaseConnection";
+import { DataBaseConnection } from "./DataBaseConnection.entity";
 
 const entities = [DataBaseConnection];
 export { DataBaseConnection };
 
-export default DataBaseConnection;
+export default entities;

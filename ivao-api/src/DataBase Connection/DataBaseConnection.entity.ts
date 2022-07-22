@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity('Bookings')
 export class DataBaseConnection{
     @PrimaryGeneratedColumn({
         type: 'bigint',
@@ -11,21 +11,21 @@ export class DataBaseConnection{
     @Column()
     title: string;
     @Column()
-    rating: number;
+    Rating: number;
     @Column()
     EvTREx: number;
     @Column({
         name:'start_time'
     })
-    startTime: Date;
+    startTime: string;
     @Column({
         name:'end_time'
     })
-    endTime:Date;
+    endTime:string;
     @Column({
         type:'bigint',
         name:'user_vid'
     })
-    vid:number;
+    VID:number;
 
 }

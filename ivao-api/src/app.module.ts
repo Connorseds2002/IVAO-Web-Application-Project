@@ -3,19 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { addBookingModule } from './ATC Bookings/AtcBookings.module';
-import DataBaseConnection from './DataBase Connection';
-
 @Module({
-  imports: [addBookingModule, TypeOrmModule.forRoot({
-    type: 'mysql',
-    host: '127.0.0.1',
-    port: 3306,
-    username: 'admin',
-    password: 'admin123',
-    database: 'bookings',
-    entities: [DataBaseConnection],
-    synchronize: true,
-  })],
+  imports: [
+    TypeOrmModule.forRoot(),
+    addBookingModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

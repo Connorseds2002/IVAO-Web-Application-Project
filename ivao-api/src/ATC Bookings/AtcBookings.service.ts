@@ -1,15 +1,23 @@
 import {  Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { DataBaseConnection } from "src/DataBase Connection";
+import { Repository } from "typeorm";
+import { addBookingDto } from "./AddBooking.dto";
 import { AtcBookings } from "./AtcBooking.module";
 
 @Injectable()
 export class AtcBookingsService{
     private ATCBooking: AtcBookings[] = [];
+    constructor(
+        @InjectRepository(DataBaseConnection)
+        private readonly Connection: Repository<DataBaseConnection>,
+    ){}
 
-    addBooking(title: string, ratings: string, EvTREx: string, time: number, VID:number){
-        const id = Math.random().toString();
-        const newBooking = new AtcBookings(id , title, ratings, EvTREx, time, VID)
-        this.ATCBooking.push(newBooking);
-        return id
+    addBooking(addBookingDOT: addBookingDto){
+        console.log(addBookingDOT)
+        const newBooking = this.Connection.create(addBookingDOT)
+        console.log(newBooking)
+        return this.Connection.save(newBooking);
     }
     getBookings(){
         return [...this.ATCBooking];

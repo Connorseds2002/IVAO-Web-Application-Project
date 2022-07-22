@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
-import { throws } from "assert";
+import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from "@nestjs/common";
+import { addBookingDto } from "./AddBooking.dto";
 import { AtcBookingsService } from "./AtcBookings.service";
 function ratingsnum(rating){
   if(rating == 1){
@@ -51,11 +51,9 @@ function eventTraningExam(et){
 export  class AtcBookingsControler {
     constructor(private readonly AtcBookingService: AtcBookingsService){}
     @Post()
-    addBooking(@Body('title') title:string, @Body('rating') rating:number, @Body('ET') et:number, @Body('time') time:number, @Body('VID') VID:number ): any {
-      const ratings = ratingsnum(rating)
-      const EvTREx = eventTraningExam(et)
-      const genID =   this.AtcBookingService.addBooking(title, ratings, EvTREx, time,VID)
-      return {id: genID}
+    @UsePipes(ValidationPipe)
+    addBooking(@Body() AddBookings:addBookingDto): any {
+      return this.AtcBookingService.addBooking(AddBookings);
     }
     @Get()
     allbookings(){
