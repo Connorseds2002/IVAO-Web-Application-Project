@@ -20,7 +20,8 @@ export class AtcBookingsService{
         return this.Connection.save(newBooking);
     }
     getBookings(){
-        return [...this.ATCBooking];
+        console.log(this.Connection.target)
+        // return this.Connection.extend;
     }
     getOneBooking(bid :string){
         const booking = this.findBooking(bid)[0];
