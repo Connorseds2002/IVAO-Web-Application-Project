@@ -1,44 +1,34 @@
-import {  Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { DataBaseConnection } from "src/DataBase Connection";
-import { Repository } from "typeorm";
-import { addBookingDto } from "./AddBooking.dto";
-import { AtcBookings } from "./AtcBooking.module";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DataBaseConnection } from 'src/DataBase Connection';
+import { Repository } from 'typeorm';
+import { addBookingDto } from './AddBooking.dto';
 
 @Injectable()
-export class AtcBookingsService{
-    private ATCBooking: AtcBookings[] = [];
-    constructor(
-        @InjectRepository(DataBaseConnection)
-        private readonly Connection: Repository<DataBaseConnection>,
-    ){}
+export class UsersService {
+  constructor(
+    @InjectRepository(DataBaseConnection)
+    private usersRepository: Repository<DataBaseConnection>,
+  ) {}
 
-    addBooking(addBookingDOT: addBookingDto){
-        console.log(addBookingDOT)
-        const newBooking = this.Connection.create(addBookingDOT)
-        console.log(newBooking)
-        return this.Connection.save(newBooking);
-    }
-    getBookings(){
-        console.log(this.Connection.target)
-        // return this.Connection.extend;
-    }
-    getOneBooking(bid :string){
-        const booking = this.findBooking(bid)[0];
-        return {...booking}
-    }
-    removeBooking(ID: string){
-        const index = this.findBooking(ID)[1];
-        this.ATCBooking.splice(index, 1);
-    }
+  findAll(): Promise<DataBaseConnection[]> {
+    return this.usersRepository.find();
+  }
 
-    private findBooking(bid: string): [AtcBookings, number]{
-        const index = this.ATCBooking.findIndex((id) => id.id === bid)
-        const Booking = this.ATCBooking[index];
-        if(!Booking){
-            throw new NotFoundException('Cound not find Booking in system');
-        }
-        console.log(Booking, index)
-        return [Booking, index]
-    }
+  findOne(id: number): Promise<DataBaseConnection> {
+    return this.usersRepository.findOneBy({ id });
+  }
+  findbydate(date: any): Promise<DataBaseConnection[]>{
+    return this.usersRepository.findBy(date);
+  }
+  addBooking(addBookingDOT: addBookingDto){
+    console.log(addBookingDOT)
+    const newBooking = this.usersRepository.create(addBookingDOT)
+    console.log(newBooking)
+    return this.usersRepository.save(newBooking);
+}
+
+  async remove(id: number): Promise<void> {
+    await this.usersRepository.delete(id);
+  }
 }

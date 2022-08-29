@@ -9,6 +9,8 @@ export class addBookingDto{
     @IsNotEmpty()
     EvTREx: number;
     @IsNotEmpty()
+    Date: string;
+    @IsNotEmpty()
     startTime: string;
     @IsNotEmpty()
     endTime: string;

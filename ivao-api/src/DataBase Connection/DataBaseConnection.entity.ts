@@ -14,6 +14,8 @@ export class DataBaseConnection{
     Rating: number;
     @Column()
     EvTREx: number;
+    @Column()
+    Date: string;
     @Column({
         name:'start_time'
     })

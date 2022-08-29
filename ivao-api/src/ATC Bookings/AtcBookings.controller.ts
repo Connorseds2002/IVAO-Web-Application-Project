@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { addBookingDto } from "./AddBooking.dto";
-import { AtcBookingsService } from "./AtcBookings.service";
+import { UsersService } from "./AtcBookings.service";
 function ratingsnum(rating){
   if(rating == 1){
     return "AS1"
@@ -49,7 +49,7 @@ function eventTraningExam(et){
 }
 @Controller('Bookings')
 export  class AtcBookingsControler {
-    constructor(private readonly AtcBookingService: AtcBookingsService){}
+    constructor(private readonly AtcBookingService: UsersService){}
     @Post()
     @UsePipes(ValidationPipe)
     addBooking(@Body() AddBookings:addBookingDto): any {
@@ -57,15 +57,15 @@ export  class AtcBookingsControler {
     }
     @Get()
     allbookings(){
-      return this.AtcBookingService.getBookings();
+      return this.AtcBookingService.findAll();
     }
     @Get(':ID')
-    Bookings(@Param('ID') ID: string){
-      return this.AtcBookingService.getOneBooking(ID);
+    Bookings(@Param('ID') ID: number){
+      return this.AtcBookingService.findOne(ID);
     }
     @Delete(':id')
-    removeBooking(@Param('id') id: string){
-      this.AtcBookingService.removeBooking(id);
+    removeBooking(@Param('id') id: any){
+      this.AtcBookingService.remove(id);
       return "This booking has now been removed and no longer active"
     }
 }
